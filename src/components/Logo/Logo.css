@@ -1,0 +1,14 @@
+.container {
+    max: 25px;
+    width: 250px;
+    height: 250px;
+   
+
+}
+
+.inner-element {
+    border-radius: 800px;
+}
+
+
+
