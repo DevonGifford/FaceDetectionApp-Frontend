@@ -1,18 +1,18 @@
-import React from "react";
-import Logo_example from './Logo_example.jpg'
+import React from 'react'; 
 import Tilt from 'react-parallax-tilt';
+import brain from './brain.png';
 import './Logo.css';
 
 const Logo = () => {
-    return(
-        <div className="container ma4 mt0">
-            <Tilt gyroscope={true} tiltMaxAngleX={45} tiltMaxAngleY={45}>
-                <div className="Tilt-inner pa3">
-                    <img src={Logo_example} className="inner-element" alt="pic" />
-                </div>
-            </Tilt>
+  return (
+    <div className='ma4 mt0'>
+      <Tilt className="Tilt br2 shadow-2" options={{ max : 55 }} style={{ height: 150, width: 150 }} >
+        <div className="Tilt-inner pa1">
+          <img style={{paddingTop: '0px'}} alt='logo' src={brain}/>
         </div>
-    );
+      </Tilt>
+    </div>
+  );
 }
 
 export default Logo;

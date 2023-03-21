@@ -1,14 +1,4 @@
-.container {
-    max: 25px;
-    width: 250px;
-    height: 250px;
-   
-
+.Tilt {
+  background-color: #b6bccc;
+  
 }
-
-.inner-element {
-    border-radius: 800px;
-}
-
-
-
