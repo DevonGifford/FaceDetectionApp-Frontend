@@ -1,8 +1,10 @@
 # Face Detection App
 
-Created using class based components - (practice)
+## Created using class based components
+Although modern React tends to use functional components, I wanted to expand my knowledge of class components as I beliee it's a useful skill to have in my toolbox.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+This project was bootstrapped with [Create React App] - (https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
