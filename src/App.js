@@ -17,15 +17,14 @@ let config = {
   life: [1, 3],
   v: [0.1, 3],
   tha: [-40, 40],
-  // body: "./img/icon.png", // Whether to render pictures
   rotate: [0, 20],
   alpha: [0.6, 0],
   scale: [0.1, 0.1],
-  position: {width:500, height:999}, // all or center or {x:1,y:1,width:100,height:100}
-  cross: "cross", // cross or bround
-  random: 3,  // or null,
-  g: 8,    // gravity
-  f: [2, -1], // force
+  position: {width:500, height:999}, 
+  cross: "cross", 
+  random: 3, 
+  g: 8,  
+  f: [2, -1], 
   onParticleUpdate: (ctx, particle) => {
       ctx.beginPath();
       ctx.rect(particle.p.x, particle.p.y, particle.radius * 2, particle.radius * 2);
@@ -37,9 +36,9 @@ let config = {
 
 
 
-//Please insert your own API key here....
+
 const app = new Clarifai.App({
- apiKey: '995a8ba49af14bf7be04d5d2a8dda63b'
+ apiKey: '995a8ba49af14bf7be04d5d2a8dda63b'     //Please insert your own API key here....
 });
 
 
@@ -77,6 +76,7 @@ class App extends Component {
     const image = document.getElementById('inputimage');
     const width = Number(image.width);
     const height = Number(image.height);
+    //console.log(width, height); 
     return {
       leftCol: clarifaiFace.left_col * width,
       topRow: clarifaiFace.top_row * height,
@@ -95,8 +95,6 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
-
-
     app.models.predict('face-detection', this.state.input)
       .then(response => {
         console.log('hi', response)
@@ -122,7 +120,7 @@ class App extends Component {
   onRouteChange = (route) => {
     if (route === 'signout') {
       this.setState({isSignedIn: false})
-    } else if (route === 'home') {                    //changed to home for development - CHANGE BACK
+    } else if (route === 'home') {       //changed to home for development - CHANGE BACK
       this.setState({isSignedIn: true})
     }
     this.setState({route: route});
@@ -145,7 +143,10 @@ class App extends Component {
                 onInputChange={this.onInputChange}
                 onButtonSubmit={this.onButtonSubmit}
               />
-              <FaceRecognition box={box} imageUrl={imageUrl} />
+              <FaceRecognition 
+                box={box} 
+                imageUrl={imageUrl} 
+              />
             </div>
           : (
              route === 'signin'
