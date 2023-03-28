@@ -11,6 +11,7 @@ import Rank from './components/Rank/Rank';
 import './App.css';
 
 let config = {
+//Configuration for our particle effect background
   num: [0.1, 999],
   rps: 0.3,
   radius: [5, 40],
@@ -34,31 +35,29 @@ let config = {
   }
 };
 
-
-
-
 const app = new Clarifai.App({
  apiKey: '995a8ba49af14bf7be04d5d2a8dda63b'     //Please insert your own API key here....
 });
 
+const initialState = { 
+    input: '',
+    imageUrl: '',
+    box: {},
+    route: 'signin',
+    isSignedIn: false,
+    user: {
+      id: '',
+      name: '',
+      email: '',
+      entries: 0,
+      joined: ''
+    }
+}
 
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      input: '',
-      imageUrl: '',
-      box: {},
-      route: 'home',
-      isSignedIn: false,
-      user: {
-        id: '',
-        name: '',
-        email: '',
-        entries: 0,
-        joined: ''
-      }
-    }
+    this.state = initialState;
   }
 
   loadUser = (data) => {
@@ -97,7 +96,7 @@ class App extends Component {
     this.setState({imageUrl: this.state.input});
     app.models.predict('face-detection', this.state.input)
       .then(response => {
-        console.log('hi', response)
+        //console.log('hi', response)
         if (response) {
           fetch('http://localhost:3000/image', {
             method: 'put',
@@ -110,7 +109,7 @@ class App extends Component {
             .then(count => {
               this.setState(Object.assign(this.state.user, { entries: count}))
             })
-
+            .catch(console.log);
         }
         this.displayFaceBox(this.calculateFaceLocation(response))
       })
@@ -119,8 +118,8 @@ class App extends Component {
 
   onRouteChange = (route) => {
     if (route === 'signout') {
-      this.setState({isSignedIn: false})
-    } else if (route === 'home') {       //changed to home for development - CHANGE BACK
+      this.setState(initialState);
+    } else if (route === 'home') {       //change to home for development - CHANGE BACK
       this.setState({isSignedIn: true})
     }
     this.setState({route: route});
