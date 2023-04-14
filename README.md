@@ -23,3 +23,7 @@ Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
+
+You can find a link to the back end of this app.
+Created with Node.js & PostgeSQL
+https://github.com/DevonGifford/FaceDetectionApp-BackEnd
