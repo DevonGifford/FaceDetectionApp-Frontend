@@ -35,9 +35,9 @@ let config = {
   }
 };
 
-const app = new Clarifai.App({
-  apiKey: '995a8ba49af14bf7be04d5d2a8dda63b'     //Please insert your own API key here....
- });
+// const app = new Clarifai.App({
+//   apiKey: '995a8ba49af14bf7be04d5d2a8dda63b'     //Please insert your own API key here....
+//  });
 
 const initialState = { 
     input: '',
