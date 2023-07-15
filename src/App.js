@@ -35,9 +35,9 @@ let config = {
   }
 };
 
-// const app = new Clarifai.App({
-//  apiKey: ''     //Please insert your own API key here....
-// });
+const app = new Clarifai.App({
+  apiKey: '995a8ba49af14bf7be04d5d2a8dda63b'     //Please insert your own API key here....
+ });
 
 const initialState = { 
     input: '',
@@ -96,7 +96,7 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
-      fetch('http://localhost:3000/imageurl', {
+      fetch('https://devon-facedetection-app.onrender.com/imageurl', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -107,7 +107,7 @@ class App extends Component {
     .then(response => {
       //console.log('hi', response)
       if (response) {
-        fetch('http://localhost:3000/image', {
+        fetch('https://devon-facedetection-app.onrender.com/image', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
