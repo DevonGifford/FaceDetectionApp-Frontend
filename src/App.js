@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ParticlesBg from 'particles-bg'
-//import Clarifai from 'clarifai';
+import ParticlesBg from 'particles-bg';
+
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Navigation from './components/Navigation/Navigation';
 import Signin from './components/Signin/Signin';
@@ -8,7 +8,9 @@ import Register from './components/Register/Register';
 import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
+
 import './App.css';
+//import Clarifai from 'clarifai';
 
 let config = {
 //Configuration for our particle effect background
@@ -35,9 +37,9 @@ let config = {
   }
 };
 
-// const app = new Clarifai.App({
-//   apiKey: '995a8ba49af14bf7be04d5d2a8dda63b'     //Please insert your own API key here....
-//  });
+const app = new Clarifai.App({
+  apiKey: '995a8ba49af14bf7be04d5d2a8dda63b'     //Please insert your own API key here....
+ });
 
 const initialState = { 
     input: '',
@@ -96,7 +98,7 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
-      fetch('https://devon-facedetection-backend.onrender.com/imageurl', {
+      fetch('https://devon-facedetection-app.onrender.com/imageurl', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -107,7 +109,7 @@ class App extends Component {
     .then(response => {
       //console.log('hi', response)
       if (response) {
-        fetch('https://devon-facedetection-backend.onrender.com/image', {
+        fetch('https://devon-facedetection-app.onrender.com/image', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
@@ -138,8 +140,20 @@ class App extends Component {
     const { isSignedIn, imageUrl, route, boxes } = this.state;
     return (
       <div className="App">
-        <ParticlesBg className="particles" type="cobweb" color="#FFFFFF" config={config} bg={true} />
-        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
+        
+        <ParticlesBg 
+          className="particles" 
+          type="cobweb" 
+          color="#FFFFFF" 
+          config={config} 
+          bg={true} 
+        />
+        
+        <Navigation 
+          isSignedIn={isSignedIn} 
+          onRouteChange={this.onRouteChange} 
+        />
+        
         { route === 'home'
           ? <div>
               <Logo />
