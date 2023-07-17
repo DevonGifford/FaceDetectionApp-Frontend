@@ -13,17 +13,6 @@ const Navigation = ({ onRouteChange, isSignedIn }) => {
     
   };
 
-  const navigate = useNavigate();
-
-  const handleSignOut = () => {
-    // Update the route to the sign-in page & Update the state to use the initialState
-    onRouteChange('signout');
-    
-    // Or use the navigate function to go to the sign-in page
-    navigate('/');
-    
-  };
-
     if (isSignedIn) {
       return (
 
