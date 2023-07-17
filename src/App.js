@@ -11,31 +11,6 @@ import './App.css';
 import ParticlesComponent from './components/Particles/ParticlesBackground';
 //import Clarifai from 'clarifai';
 
-// let config = {
-// //Configuration for our particle effect background
-//   num: [0.1, 999],
-//   rps: 0.3,
-//   radius: [5, 40],
-//   life: [1, 3],
-//   v: [0.1, 3],
-//   tha: [-40, 40],
-//   rotate: [0, 20],
-//   alpha: [0.6, 0],
-//   scale: [0.1, 0.1],
-//   position: {width:500, height:999}, 
-//   cross: "cross", 
-//   random: 3, 
-//   g: 8,  
-//   f: [2, -1], 
-//   onParticleUpdate: (ctx, particle) => {
-//       ctx.beginPath();
-//       ctx.rect(particle.p.x, particle.p.y, particle.radius * 2, particle.radius * 2);
-//       ctx.fillStyle = particle.color;
-//       ctx.fill();
-//       ctx.closePath();
-//   }
-// };
-
 //🎯 TEST IF IT WORKS WITHOUT PAT
 // const app = new Clarifai.App({
 //   apiKey: '995a8ba49af14bf7be04d5d2a8dda63b'     //Please insert your own API key here....
@@ -170,19 +145,21 @@ class App extends Component {
           <Routes>
 
             {/* Render the Signin page component */}
-            <Route path="/signin" element={<Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />} />
-            
+            {!isSignedIn && <Route path="/" element={<Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />} />}
             
             {/* Render the Register page component */}
-            <Route path="/register" element={<Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />} />
-
+            {!isSignedIn && <Route path="/register" element={<Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />} />}
 
             {/* Render the Home page components */}
-            <Route path="/" element={<Home user={this.state.user} onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} boxes={boxes} imageUrl={imageUrl}/>} />
-            
+            {isSignedIn ? (
+              <Route path="/" element={<Home user={this.state.user} onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} boxes={boxes} imageUrl={imageUrl}/>} />
+            ) : (
+              // Redirect to the Signin page if not signed in
+              <Navigate to="/signin" replace={true} />
+            )}
             
             {/* Render the About page component */}
-            <Route path="/about" element={<About />} />      
+            <Route path="/about" element={<About />} />
             
 
           </Routes>
