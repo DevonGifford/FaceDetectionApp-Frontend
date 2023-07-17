@@ -56,25 +56,25 @@ const initialState = {
     }
 }
 
-const DevelopmentState = { 
-  input: '',
-  imageUrl: '',
-  boxes: [],
-  route: 'home',      
-  isSignedIn: true,   
-  user: {
-    id: '69',
-    name: 'Developer',
-    email: 'developer@gmail.com',
-    entries: 420,
-    joined: ''
-  }
-}
+// const DevelopmentState = { 
+//   input: '',
+//   imageUrl: '',
+//   boxes: [],
+//   route: 'home',      
+//   isSignedIn: true,   
+//   user: {
+//     id: '69',
+//     name: 'Developer',
+//     email: 'developer@gmail.com',
+//     entries: 420,
+//     joined: ''
+//   }
+// }
 
 class App extends Component {
   constructor() {
     super();
-    this.state = DevelopmentState;  //🎯DEVELOPMENT - CHANGE BACK TO: initialState
+    this.state = initialState;  //🎯DEVELOPMENT - CHANGE BACK TO: DevelopmentState
   }
 
   loadUser = (data) => {
@@ -113,40 +113,40 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
-    this.displayFaceBox([]);  //🎯🎯🎯 DEVELOPMENT - DELETE THIS LINE
-    //🎯🎯🎯 DEVELOPMENT - UNCOMENT BELOW
-    //   fetch('https://devon-facedetection-app.onrender.com/imageurl', {
-    //     method: 'post',
-    //     headers: {'Content-Type': 'application/json'},
-    //     body: JSON.stringify({
-    //       input: this.state.input
-    //     })
-    // })
-    // .then(response => response.json())
-    // .then(response => {
-    //   //console.log('hi', response)
-    //   if (response) {
-    //     fetch('https://devon-facedetection-app.onrender.com/image', {
-    //       method: 'put',
-    //       headers: {'Content-Type': 'application/json'},
-    //       body: JSON.stringify({
-    //         id: this.state.user.id
-    //       })
-    //     })
-    //       .then(response => response.json())
-    //       .then(count => {
-    //         this.setState(Object.assign(this.state.user, { entries: count}))
-    //       })
-    //       .catch(console.log);
-    //   }
-    //   this.displayFaceBox(this.calculateFaceLocations(response))
-    // })
-    // .catch(err => console.log(err));
+    // this.displayFaceBox([]);  🎯 DEVELOPMENT - ADD THIS LINE
+    //🎯 DEVELOPMENT - COMMENT OUT BELOW
+      fetch('https://devon-facedetection-app.onrender.com/imageurl', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          input: this.state.input
+        })
+    })
+    .then(response => response.json())
+    .then(response => {
+      //console.log('hi', response)
+      if (response) {
+        fetch('https://devon-facedetection-app.onrender.com/image', {
+          method: 'put',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            id: this.state.user.id
+          })
+        })
+          .then(response => response.json())
+          .then(count => {
+            this.setState(Object.assign(this.state.user, { entries: count}))
+          })
+          .catch(console.log);
+      }
+      this.displayFaceBox(this.calculateFaceLocations(response))
+    })
+    .catch(err => console.log(err));
   }
 
   onRouteChange = (route) => {
     if (route === 'signout') {
-      this.setState(DevelopmentState);     //🎯DEVELOPMENT - CHANGE BACK TO: initialState
+      this.setState(initialState);     //🎯DEVELOPMENT - CHANGE BACK TO: DevelopmentState
     } else if (route === 'home') {       
       this.setState({isSignedIn: true})
     }
@@ -157,14 +157,6 @@ class App extends Component {
     const { isSignedIn, imageUrl, route, boxes } = this.state;
     return (
       <div className="App">
-        
-        {/* <ParticlesBg 
-          className="particles" 
-          type="cobweb" 
-          color="#FFFFFF" 
-          config={config} 
-          bg={true} 
-        /> */}
 
         <ParticlesComponent />
         
