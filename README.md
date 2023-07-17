@@ -111,3 +111,5 @@ By choosing to work with class-based components in this project, I not only gain
 
 #### Additional hosting:
 - [Render](https://render.com/): Server, Database & Front-end hosting
+
+<br/>
