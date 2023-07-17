@@ -7,12 +7,51 @@
   justify-content: center;
 }
 
-.particles {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-  color: #c3cad6;
+.rank {
+  z-index: 2;
+  position: relative;
+}
+
+#tsparticles {
+  position: relative;
+}
+
+#signout {
+  /* color: white; */
+  z-index: 2;
+}
+
+#signin {
+  /* color: white; */
+  z-index: 2;
+}
+
+
+#register {
+  /* color: white; */
+  z-index: 2;
+}
+
+#about {
+  /* color: white; */
+  z-index: 2;
+}
+
+.home {
+  /* color: white; */
+  z-index: 2;
+}
+
+#measure{
+  margin-top: 10px;
+}
+
+
+.signincard {
+  z-index: 2;
+  
+}
+
+#sign_up {
+  border: none;
 }

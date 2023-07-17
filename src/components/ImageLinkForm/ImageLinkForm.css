@@ -28,4 +28,6 @@
 
 .Information {
   color: #b6bccc;
+  position: relative;
+  z-index: 2;
 }
