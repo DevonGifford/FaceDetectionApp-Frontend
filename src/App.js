@@ -122,10 +122,12 @@ class App extends Component {
   }
 
   onRouteChange = (route) => {
+    console.log(route);
     if (route === 'signin' || route === 'register' || route === 'home') {
       this.setState({ route });
     } else if (route === 'signout') {
       this.setState(initialState)
+      console.log('the test passed')
     }
   };
 
