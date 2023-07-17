@@ -1,16 +1,27 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from 'react-router-dom';
 
+import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from 'react-router-dom';
+
 import Navigation from './components/Navigation/Navigation';
+import Home from './components/Home/Home';
+import About from './components/About/AboutPage/About';
 import Home from './components/Home/Home';
 import About from './components/About/AboutPage/About';
 import Signin from './components/Signin/Signin';
 import Register from './components/Register/Register';
 
+
 import './App.css';
 import ParticlesComponent from './components/Particles/ParticlesBackground';
 //import Clarifai from 'clarifai';
+import ParticlesComponent from './components/Particles/ParticlesBackground';
+//import Clarifai from 'clarifai';
 
+//🎯 TEST IF IT WORKS WITHOUT PAT
+// const app = new Clarifai.App({
+//   apiKey: '995a8ba49af14bf7be04d5d2a8dda63b'     //Please insert your own API key here....
+//  });
 //🎯 TEST IF IT WORKS WITHOUT PAT
 // const app = new Clarifai.App({
 //   apiKey: '995a8ba49af14bf7be04d5d2a8dda63b'     //Please insert your own API key here....
@@ -50,15 +61,51 @@ class App extends Component {
   constructor() {
     super();
     this.state = initialState;  //🎯DEVELOPMENT - CHANGE BACK TO: DevelopmentState
+const initialState = { 
+    input: '',
+    imageUrl: '',
+    boxes: [],
+    route: 'signin',    
+    isSignedIn: false,   
+    user: {
+      id: '',
+      name: '',
+      email: '',
+      entries: 0,
+      joined: ''
+    }
+}
+
+// const DevelopmentState = { 
+//   input: '',
+//   imageUrl: '',
+//   boxes: [],
+//   route: 'home',      
+//   isSignedIn: true,   
+//   user: {
+//     id: '69',
+//     name: 'Developer',
+//     email: 'developer@gmail.com',
+//     entries: 420,
+//     joined: ''
+//   }
+// }
+
+class App extends Component {
+  constructor() {
+    super();
+    this.state = initialState;  //🎯DEVELOPMENT - CHANGE BACK TO: DevelopmentState
   }
 
   loadUser = (data) => {
-    this.setState({user: {
-      id: data.id,
-      name: data.name,
-      email: data.email,
-      entries: data.entries,
-      joined: data.joined
+    this.setState({
+      isSignedIn: true,
+      user: {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        entries: data.entries,
+        joined: data.joined
     }})
   }
 
@@ -86,8 +133,11 @@ class App extends Component {
       bottomRow: height - (clarifaiFace.bottom_row * height)
     }
     });
+    });
   }
 
+  displayFaceBox = (boxes) => {
+    this.setState({boxes: boxes});
   displayFaceBox = (boxes) => {
     this.setState({boxes: boxes});
   }
@@ -127,6 +177,35 @@ class App extends Component {
       this.displayFaceBox(this.calculateFaceLocations(response))
     })
     .catch(err => console.log(err));
+    // this.displayFaceBox([]);  🎯 DEVELOPMENT - ADD THIS LINE
+    //🎯 DEVELOPMENT - COMMENT OUT BELOW
+      fetch('https://devon-facedetection-app.onrender.com/imageurl', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          input: this.state.input
+        })
+    })
+    .then(response => response.json())
+    .then(response => {
+      //console.log('hi', response)
+      if (response) {
+        fetch('https://devon-facedetection-app.onrender.com/image', {
+          method: 'put',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            id: this.state.user.id
+          })
+        })
+          .then(response => response.json())
+          .then(count => {
+            this.setState(Object.assign(this.state.user, { entries: count}))
+          })
+          .catch(console.log);
+      }
+      this.displayFaceBox(this.calculateFaceLocations(response))
+    })
+    .catch(err => console.log(err));
   }
 
   onRouteChange = (route) => {
@@ -136,7 +215,15 @@ class App extends Component {
     } else if (route === 'signout') {
       this.setState(initialState)
       console.log('the test passed')
+    console.log(route);
+    if (route === 'signin' || route === 'register' || route === 'home') {
+      this.setState({ route });
+    } else if (route === 'signout') {
+      this.setState(initialState)
+      console.log('the test passed')
     }
+  };
+
   };
 
 
