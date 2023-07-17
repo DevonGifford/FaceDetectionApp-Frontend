@@ -34,7 +34,7 @@ class Signin extends React.Component {
       .then(user => {
         if (user.id) {
           this.props.loadUser(user)
-          this.props.navigate('/home');
+          // this.props.navigate('/home');
           // this.props.onRouteChange('home');
         }
       })
@@ -61,7 +61,7 @@ class Signin extends React.Component {
       .then((user) => {
         if (user.id) {
           this.props.loadUser(user)
-          this.props.navigate('/home');
+          // this.props.navigate('/home');
           // this.props.onRouteChange("home")
         }
         
