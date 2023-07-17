@@ -3,19 +3,24 @@ import './ImageLinkForm.css';
 
 const ImageLinkForm = ({ onInputChange, onButtonSubmit }) => {
   return (
-    <div>
+    <div className='z2'>
       
       {/* Mini Heading */}
-      <p className='Information f3'>
-        {'This Face Scanner will detect faces in your pictures. Give it a try.'}
+      <p className='Information f3 pt2'>
+        This Face Scanner will detect faces in your pictures. Give it a try.
       </p>
       
       {/* DATA & SUBMIT */}
       <div className='center'>
-        <div className='form center pa4 br3 shadow-5'>
+        <div className='form center pa4 br3 shadow-5 z-2'>
           
           {/* ENTER THE URL */}
-          <input className='DetectURL f4 pa2 w-70 center' type='text' onChange={onInputChange}/>
+          <input 
+            className='DetectURL f4 pa2 w-70 center' 
+            type='text' 
+            placeholder='enter image URL'
+            onChange={onInputChange}
+          />
           
           {/* SUBMIT BUTTON */}
           <button
