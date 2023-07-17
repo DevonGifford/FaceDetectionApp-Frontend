@@ -1,6 +1,17 @@
 import React from 'react';
 
 const Navigation = ({ onRouteChange, isSignedIn }) => {
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    // Update the route to the sign-in page & Update the state to use the initialState
+    onRouteChange('signout');
+    
+    // Or use the navigate function to go to the sign-in page
+    navigate('/');
+    
+  };
+
     if (isSignedIn) {
       return (
         <nav style={{display: 'flex',  justifyContent: 'space-between', padding: '2px 20px 2px', zIndex: '1'}}>
