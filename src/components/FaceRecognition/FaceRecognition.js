@@ -4,7 +4,8 @@ import './FaceRecognition.css';
 const FaceRecognition = ({ imageUrl, boxes }) => {
   return (
     <div className='center ma'>
-      <div className='absolute mt2'>
+      <div className='absolute mt4'>
+        
         <img id='inputimage' alt='' src={imageUrl} width='500px' heigh='auto'/>
          {boxes.map(box => { 
           return <div className='bounding-box' 
@@ -17,6 +18,7 @@ const FaceRecognition = ({ imageUrl, boxes }) => {
           ></div>
           }) 
         } 
+
       </div>
     </div>
   );

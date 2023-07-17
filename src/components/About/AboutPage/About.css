@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bigHeading {
+    font-size: xx-large;
+    z-index: 2;
+}
