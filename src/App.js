@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Outlet } from 'react-router-dom';
 
 import Navigation from './components/Navigation/Navigation';
 import Home from './components/Home/Home';
@@ -141,28 +141,32 @@ class App extends Component {
             isSignedIn={isSignedIn} 
             onRouteChange={this.onRouteChange} 
           />
+          <Outlet />
 
           <Routes>
-
             {/* Render the Signin page component */}
-            {!isSignedIn && <Route path="/" element={<Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />} />}
-            
+            {!isSignedIn && (
+              <Route path="/" element={<Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />} />
+            )}
+
             {/* Render the Register page component */}
-            {!isSignedIn && <Route path="/register" element={<Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />} />}
+            {!isSignedIn && (
+              <Route path="/register" element={<Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />} />
+            )}
 
             {/* Render the Home page components */}
             {isSignedIn ? (
-              <Route path="/" element={<Home user={this.state.user} onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} boxes={boxes} imageUrl={imageUrl}/>} />
+              <Route path="/" element={<Home user={this.state.user} onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} boxes={boxes} imageUrl={imageUrl} />} />
             ) : (
               // Redirect to the Signin page if not signed in
-              <Navigate to="/signin" replace={true} />
+              <Route path="/" element={<Navigate to="/signin" />} />
             )}
-            
+
             {/* Render the About page component */}
             <Route path="/about" element={<About />} />
-            
-
           </Routes>
+
+          
         </Router>
       </div>
     );
