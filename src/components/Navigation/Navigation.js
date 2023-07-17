@@ -1,7 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navigation = ({ onRouteChange, isSignedIn }) => {
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    // Update the route to the sign-in page
+    onRouteChange('signin');
+    // Or use the navigate function to go to the sign-in page
+    navigate('/');
+    // Update the state to use the initialState
+    this.setState(initialState);
+  };
+
     if (isSignedIn) {
       return (
 
@@ -17,7 +28,7 @@ const Navigation = ({ onRouteChange, isSignedIn }) => {
           
           {/* RIGHT HALF */}
           <div className='flex items-end'>
-            <p onClick={() => onRouteChange('signout')} className='f3 link dim white underline pa3 pointer' id='signin'>
+            <p onClick={handleSignOut} className='f3 link dim white underline pa3 pointer' id='signin'>
               Sign Out
             </p>
           </div>
@@ -27,6 +38,7 @@ const Navigation = ({ onRouteChange, isSignedIn }) => {
       );
     } else {
       return (
+
         <nav style={{ display: 'flex', justifyContent: 'flex-end', padding: '2px 20px 2px' }}>
 
           <Link to="/" className='f3 link dim white underline pa3 pointer' id='signin'>
