@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from 'react-router-dom';
 
 import Navigation from './components/Navigation/Navigation';
 import Home from './components/Home/Home';
@@ -10,31 +10,6 @@ import Register from './components/Register/Register';
 import './App.css';
 import ParticlesComponent from './components/Particles/ParticlesBackground';
 //import Clarifai from 'clarifai';
-
-// let config = {
-// //Configuration for our particle effect background
-//   num: [0.1, 999],
-//   rps: 0.3,
-//   radius: [5, 40],
-//   life: [1, 3],
-//   v: [0.1, 3],
-//   tha: [-40, 40],
-//   rotate: [0, 20],
-//   alpha: [0.6, 0],
-//   scale: [0.1, 0.1],
-//   position: {width:500, height:999}, 
-//   cross: "cross", 
-//   random: 3, 
-//   g: 8,  
-//   f: [2, -1], 
-//   onParticleUpdate: (ctx, particle) => {
-//       ctx.beginPath();
-//       ctx.rect(particle.p.x, particle.p.y, particle.radius * 2, particle.radius * 2);
-//       ctx.fillStyle = particle.color;
-//       ctx.fill();
-//       ctx.closePath();
-//   }
-// };
 
 //🎯 TEST IF IT WORKS WITHOUT PAT
 // const app = new Clarifai.App({
@@ -78,12 +53,14 @@ class App extends Component {
   }
 
   loadUser = (data) => {
-    this.setState({user: {
-      id: data.id,
-      name: data.name,
-      email: data.email,
-      entries: data.entries,
-      joined: data.joined
+    this.setState({
+      isSignedIn: true,
+      user: {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        entries: data.entries,
+        joined: data.joined
     }})
   }
 
@@ -145,13 +122,15 @@ class App extends Component {
   }
 
   onRouteChange = (route) => {
-    if (route === 'signout') {
-      this.setState(initialState);     //🎯DEVELOPMENT - CHANGE BACK TO: DevelopmentState
-    } else if (route === 'home') {       
-      this.setState({isSignedIn: true})
+    console.log(route);
+    if (route === 'signin' || route === 'register' || route === 'home') {
+      this.setState({ route });
+    } else if (route === 'signout') {
+      this.setState(initialState)
+      console.log('the test passed')
     }
-    this.setState({route: route});
-  }
+  };
+
 
   render() {
     const { isSignedIn, imageUrl, route, boxes } = this.state;
@@ -163,29 +142,35 @@ class App extends Component {
         <Router>
         
           <Navigation 
-            isSignedIn={isSignedIn} 
             onRouteChange={this.onRouteChange} 
+            isSignedIn={isSignedIn} 
           />
+          <Outlet />
 
           <Routes>
-
             {/* Render the Signin page component */}
-            <Route path="/signin" element={<Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />} />
-            
-            
-            {/* Render the Register page component */}
-            <Route path="/register" element={<Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />} />
+            {!isSignedIn && (
+              <Route path="/" element={<Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />} />
+            )}
 
+            {/* Render the Register page component */}
+            {!isSignedIn && (
+              <Route path="/register" element={<Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />} />
+            )}
 
             {/* Render the Home page components */}
-            <Route path="/" element={<Home user={this.state.user} onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} boxes={boxes} imageUrl={imageUrl}/>} />
-            
-            
-            {/* Render the About page component */}
-            <Route path="/about" element={<About />} />      
-            
+            {isSignedIn ? (
+              <Route path="/" element={<Home user={this.state.user} onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} boxes={boxes} imageUrl={imageUrl} />} />
+            ) : (
+              // Redirect to the Signin page if not signed in
+              <Route path="/" element={<Navigate to="/signin" />} />
+            )}
 
+            {/* Render the About page component */}
+            <Route path="/about" element={<About />} />
           </Routes>
+
+
         </Router>
       </div>
     );

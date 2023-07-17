@@ -1,7 +1,7 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Logo from '../Logo/Logo'
-
 import './Signin.css'
 
 class Signin extends React.Component {
@@ -34,7 +34,8 @@ class Signin extends React.Component {
       .then(user => {
         if (user.id) {
           this.props.loadUser(user)
-          this.props.onRouteChange('home');
+          // this.props.navigate('/home');
+          // this.props.onRouteChange('home');
         }
       })
   }
@@ -46,7 +47,6 @@ class Signin extends React.Component {
     this.setState({
       signInEmail: demoEmail,
       signInPassword: demoPassword,
-      //loading: true,
     })
 
     fetch("https://devon-facedetection-backend.onrender.com/signin", {
@@ -61,11 +61,17 @@ class Signin extends React.Component {
       .then((user) => {
         if (user.id) {
           this.props.loadUser(user)
-          this.props.onRouteChange("home")
+          // this.props.navigate('/home');
+          // this.props.onRouteChange("home")
         }
-        this.setState({ loading: false })
+        
       })
   }
+
+  onRegisterButtonClick = () => {
+    // Navigate to the register page
+    this.props.navigate('/register');
+  };
 
   render() {
     const { onRouteChange } = this.props;
@@ -141,7 +147,7 @@ class Signin extends React.Component {
             <div className="lh-copy mt3 z-2 ">
               <button 
                 type='button'
-                onClick={() => onRouteChange('register')} 
+                onClick={this.onRegisterButtonClick} //{() => onRouteChange('register')}
                 className="demo-btn bg-white ma-2 white w-100 tc pv3 rounded f5 fw-bold"
               >
                 Create an account
@@ -159,4 +165,7 @@ class Signin extends React.Component {
   }
 }
 
-export default Signin;
+export default function SigninWrapper(props) {
+  const navigate = useNavigate();
+  return <Signin {...props} navigate={navigate} />;
+}

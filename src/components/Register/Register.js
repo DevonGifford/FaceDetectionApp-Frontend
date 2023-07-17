@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Logo from '../Logo/Logo'
 
@@ -41,10 +42,15 @@ class Register extends React.Component {
       .then(user => {
         if (user.id) {
           this.props.loadUser(user)
-          this.props.onRouteChange('home');
+          this.props.navigate('/');
         }
       })
   }
+
+  onLoginButtonClick = () => {
+    // Navigate to the register page
+    this.props.navigate('/');
+  };
 
   render() {
     return (
@@ -119,11 +125,11 @@ class Register extends React.Component {
 
             <p className="white">Already have an account?</p>
 
-            {/* REGISTER BUTTON */}
+            {/* Login BUTTON */}
             <div className="pt2">
               <button 
                 type='button'
-                onClick={() => onRouteChange('signin')} 
+                onClick={this.onLoginButtonClick} 
                 className="demo-btn bg-white ma-2 white w-100 tc pv3 rounded f5 fw-bold"
               >
                 Log in
@@ -142,4 +148,7 @@ class Register extends React.Component {
   }
 }
 
-export default Register;
+export default function RegisterWrapper(props) {
+  const navigate = useNavigate();
+  return <Register {...props} navigate={navigate} />;
+}
