@@ -34,8 +34,6 @@ class Signin extends React.Component {
       .then(user => {
         if (user.id) {
           this.props.loadUser(user)
-          // this.props.navigate('/home');
-          // this.props.onRouteChange('home');
         }
       })
   }
@@ -61,15 +59,12 @@ class Signin extends React.Component {
       .then((user) => {
         if (user.id) {
           this.props.loadUser(user)
-          // this.props.navigate('/home');
-          // this.props.onRouteChange("home")
         }
         
       })
   }
 
   onRegisterButtonClick = () => {
-    // Navigate to the register page
     this.props.navigate('/register');
   };
 
@@ -77,6 +72,7 @@ class Signin extends React.Component {
     const { onRouteChange } = this.props;
 
     return (
+      <>
       <article className="br3 bg-black-80 ba b--white-80 mv4 w-100 w-60-m w-0-l mw6 shadow-5 center">
         
         <main className="pa4" id='signin-form'>
@@ -161,6 +157,15 @@ class Signin extends React.Component {
         </main>
 
       </article>
+      <div className='' id='developer-note'>
+        <h2 className='underline'>Your friendly dev here</h2>
+        <p><strong>This project is hosted for free by render.com</strong></p>
+        <p>This comes with a catch</p>
+        <p>If no one has used it in a while, <br/> the server & database can take a few seconds to spin up</p>
+        <p>Please be a little patient<br/><br/> 🙏 </p>
+
+      </div>
+      </>
     );
   }
 }

@@ -6,6 +6,37 @@
 
     z-index: 2;
   }
+
+#developer-note {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  transform: rotate(-20deg);
+  top: 65%;
+  left:2%;
+  
+  background-color: rgba(255, 88, 88, 0.548);
+  border-radius: 20px;
+  width: 550px;
+  height: 350px;
+
+  color: whitesmoke;
+
+  z-index: 3;
+}
+
+@media (max-width: 1795px), (max-height: 1000px) {
+  #developer-note {
+    position: relative;
+    transform: rotate(-7deg);
+    margin: auto;
+    width:55%;
+    font-size: calc(10px + 0.5vw);
+    margin-top: 100px;
+  }
+}
+
   
   input {
     background-color: white;
@@ -30,3 +61,5 @@
     background: #001fffba;
     background: linear-gradient(298deg, #1e59e4cb, #000b5ede) !important;
   }
+
+  

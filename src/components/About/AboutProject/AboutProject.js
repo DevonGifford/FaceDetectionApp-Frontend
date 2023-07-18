@@ -17,8 +17,6 @@ const AboutProject = () => {
         <br/><br/>
       </p>
 
-      {/* <h2 className='underline'>Tech used in this project</h2> */}
-
       <div className='flex flex-row justify-center'>
 
         <div className='w-third mr5 ba bw2 b--white pb4'>

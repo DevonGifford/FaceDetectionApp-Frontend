@@ -9,12 +9,6 @@ import Register from './components/Register/Register';
 
 import './App.css';
 import ParticlesComponent from './components/Particles/ParticlesBackground';
-//import Clarifai from 'clarifai';
-
-//🎯 TEST IF IT WORKS WITHOUT PAT
-// const app = new Clarifai.App({
-//   apiKey: '995a8ba49af14bf7be04d5d2a8dda63b'     //Please insert your own API key here....
-//  });
 
 const initialState = { 
     input: '',
@@ -31,6 +25,7 @@ const initialState = {
     }
 }
 
+//📝DEVELOPMENT NOTE 
 // const DevelopmentState = { 
 //   input: '',
 //   imageUrl: '',
@@ -49,7 +44,7 @@ const initialState = {
 class App extends Component {
   constructor() {
     super();
-    this.state = initialState;  //🎯DEVELOPMENT - CHANGE BACK TO: DevelopmentState
+    this.state = initialState;  //📝DEVELOPMENT NOTE- CHANGE BACK TO: DevelopmentState
   }
 
   loadUser = (data) => {
@@ -65,17 +60,24 @@ class App extends Component {
   }
 
   calculateFaceLocations = (data) => {
-      const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+      const tempArray =[];
       const image = document.getElementById('inputimage');
       const width = Number(image.width);
       const height = Number(image.height);
-      console.log('calculateFaceLocation is running here is the width and height',width, height); 
-      return {
-        leftCol: clarifaiFace.left_col * width,
-        topRow: clarifaiFace.top_row * height,
-        rightCol: width - (clarifaiFace.right_col * width),
-        bottomRow: height - (clarifaiFace.bottom_row * height)
+      console.log('calculateFaceLocation function fired🔥'); 
+
+      for (let i = 0; i < data.outputs[0].data.regions.length; i++){
+        const clarifaiFace = data.outputs[0].data.regions[i].region_info.bounding_box;
+
+        tempArray.push({
+          leftCol: clarifaiFace.left_col * width,
+          topRow: clarifaiFace.top_row * height,
+          rightCol: width - (clarifaiFace.right_col * width),
+          bottomRow: height - (clarifaiFace.bottom_row * height)
+        });
       }
+      console.log('Boxes array',tempArray);
+      return tempArray;
     };
 
   displayFaceBox = (boxes) => {
@@ -88,8 +90,8 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input});
-    // this.displayFaceBox([]);  🎯 DEVELOPMENT - ADD THIS LINE
-    //🎯 DEVELOPMENT - COMMENT OUT BELOW
+    // this.displayFaceBox([]);   //📝DEVELOPMENT NOTE - ADD THIS LINE
+    //📝 DEVELOPMENT NOTE - COMMENT OUT BELOW
       fetch('https://devon-facedetection-backend.onrender.com/imageurl', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
@@ -99,7 +101,6 @@ class App extends Component {
     })
     .then(response => response.json())
     .then(response => {
-      console.log('getting response from backend - 1', response)
       if (response) {
         fetch('https://devon-facedetection-backend.onrender.com/image', {
           method: 'put',
