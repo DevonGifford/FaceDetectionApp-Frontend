@@ -69,7 +69,7 @@ class App extends Component {
       const image = document.getElementById('inputimage');
       const width = Number(image.width);
       const height = Number(image.height);
-      //console.log(width, height); 
+      console.log('calculateFaceLocation is running here is the width and height',width, height); 
       return {
         leftCol: clarifaiFace.left_col * width,
         topRow: clarifaiFace.top_row * height,
@@ -99,7 +99,7 @@ class App extends Component {
     })
     .then(response => response.json())
     .then(response => {
-      //console.log('hi', response)
+      console.log('getting response from backend - 1', response)
       if (response) {
         fetch('https://devon-facedetection-backend.onrender.com/image', {
           method: 'put',
