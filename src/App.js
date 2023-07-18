@@ -90,7 +90,7 @@ class App extends Component {
     this.setState({imageUrl: this.state.input});
     // this.displayFaceBox([]);  🎯 DEVELOPMENT - ADD THIS LINE
     //🎯 DEVELOPMENT - COMMENT OUT BELOW
-      fetch('https://devon-facedetection-app.onrender.com/imageurl', {
+      fetch('https://devon-facedetection-backend.onrender.com/imageurl', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -101,7 +101,7 @@ class App extends Component {
     .then(response => {
       //console.log('hi', response)
       if (response) {
-        fetch('https://devon-facedetection-app.onrender.com/image', {
+        fetch('https://devon-facedetection-backend.onrender.com/image', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
